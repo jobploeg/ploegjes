@@ -5,6 +5,10 @@ export const config = {
 }
 
 export function middleware(req: NextRequest) {
+
+  const username = process.env.USER
+  const password = process.env.PWD
+
   const basicAuth = req.headers.get('authorization')
   console.log('basicAuth', basicAuth)
   const url = req.nextUrl
@@ -13,7 +17,7 @@ export function middleware(req: NextRequest) {
     const authValue = basicAuth.split(' ')[1]
     const [user, pwd] = atob(authValue).split(':')
 
-    if (user === 'ploegjes' && pwd === 'pajeh') {
+    if (user === username && pwd === password) {
       return NextResponse.next()
     }
   }
